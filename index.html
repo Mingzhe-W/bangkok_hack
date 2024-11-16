@@ -94,7 +94,7 @@
       siriEffect.rotation.x += 0.005; // 光环轻微倾斜
 
       // 中间球体动画：音量 + 语音播放双重控制
-      const scale = 1 + smoothedVolume * 0.5 + speakingScale * 0.3; // 平滑变化
+      const scale = 1 + smoothedVolume * 0.5 + speakingScale * 0.5; // 平滑变化
       sphere.scale.set(scale, scale, scale);
 
       renderer.render(scene, camera);
@@ -105,6 +105,13 @@
     const startRecording = async () => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const source = audioContext.createMediaStreamSource(stream);
+        const analyser = audioContext.createAnalyser();
+        analyser.fftSize = 256;
+        const dataArray = new Uint8Array(analyser.frequencyBinCount);
+        source.connect(analyser);
+
         mediaRecorder = new MediaRecorder(stream);
         audioChunks = [];
 
@@ -127,20 +134,30 @@
 
             if (response.ok) {
               const result = await response.json();
-              showResponse(result.message); // 显示后端返回内容
-              playResponse(result.message); // 使用语音播放 AI 回复
+              showResponse(result.message); 
+              playResponse(result.message); 
             } else {
               showResponse("Error from server: " + response.statusText);
             }
           } catch (error) {
             console.error("Upload error:", error);
-            showResponse("Failed to upload audio.");
+            showResponse("Failed to send audio to the agent backend.");
           }
         };
 
         mediaRecorder.start();
-        showMessage("Recording... Click again to stop.");
+        showMessage("I am listening... Click again to stop.");
         isRecording = true;
+
+        const visualizeAudio = () => {
+          analyser.getByteFrequencyData(dataArray);
+
+      
+          const maxVolume = Math.max(...dataArray) / 255.0; 
+          smoothedVolume += (maxVolume - smoothedVolume) * 0.1; 
+          if (isRecording) requestAnimationFrame(visualizeAudio); 
+        };
+        visualizeAudio();
       } catch (error) {
         console.error("Audio processing error:", error);
         showMessage("Unable to access microphone. Please check permissions.");
@@ -155,25 +172,25 @@
       }
     };
 
-    // 使用 Web Speech API 播放语音
+    // web speech API play response
     const playResponse = (text) => {
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = 'en-US'; // 设置语言
-      utterance.rate = 1; // 播放速度
-      utterance.pitch = 1; // 音调
+      utterance.lang = 'en-US'; /
+      utterance.rate = 1; //
+      utterance.pitch = 1; // 
 
       // 在语音播放过程中更新 speakingScale 动画
       utterance.onstart = () => {
-        speakingScale = 1;
+        speakingScale = 1; // 开始放大
       };
       utterance.onend = () => {
-        speakingScale = 0;
+        speakingScale = 0; // 停止
       };
 
       speechSynthesis.speak(utterance);
     };
 
-    // 显示消息
+    // show response
     const messageBox = document.getElementById("message");
     const responseBox = document.getElementById("response");
 
@@ -190,7 +207,7 @@
       }, 5000);
     };
 
-    // 点击屏幕开始/停止录音
+    // start recording on click
     window.addEventListener("click", () => {
       if (isRecording) {
         stopRecording();
