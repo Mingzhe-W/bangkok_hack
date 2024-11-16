@@ -1,0 +1,24 @@
+{
+    "vector": [
+        100,
+        200,
+        300,
+        400,
+        500,
+        600,
+        700,
+        800,
+        900,
+        1000
+    ],
+    "crop_segments": [
+        {
+            "start_index": 1,
+            "crop_length": 3
+        },
+        {
+            "start_index": 5,
+            "crop_length": 2
+        }
+    ]
+}
