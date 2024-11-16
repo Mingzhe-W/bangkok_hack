@@ -5,6 +5,13 @@ import speech_recognition as sr
 from transformers import pipeline
 
 
+
+# todo 
+# recording to vector jason
+# bibibbibibi
+# jiangchi qianduan
+# ai gent shuohua
+
 def record_audio(file_name="output.wav", record_seconds=10, sample_rate=44100, chunk_size=1024):
     """make recording"""
     audio_format = pyaudio.paInt16
