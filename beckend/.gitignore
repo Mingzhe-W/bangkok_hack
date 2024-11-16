@@ -1,6 +1,6 @@
 node_modules
-.env
-
+beckend/.env
+beckend/node_modules
 # Hardhat files
 /cache
 /artifacts

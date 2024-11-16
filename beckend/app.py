@@ -4,7 +4,7 @@ import os
 from flask_cors import CORS
 
 from audio_transcriptor import transcribe_audio
-from transaction_parsing_agent import parse_transfer_with_hyperbolic
+from hyperbolic_parsing_agent import parse_transfer_with_hyperbolic
 
 import time
 import os
