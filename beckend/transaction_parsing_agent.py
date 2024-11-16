@@ -1,6 +1,6 @@
 import re
 import requests
-
+import json
 # 定义 Hyperbolic API 配置
 HYPERBOLIC_API_URL = "https://api.hyperbolic.xyz/v1/completions" 
 HYPERBOLIC_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtendhbmcxMDMwQG91dGxvb2suY29tIiwiaWF0IjoxNzMxNzAxODIyfQ.wS7uENmYmYlBdVNVmo9C4eQfWrP5nFWq8JjM7Ii16lc"
@@ -53,17 +53,22 @@ def parse_transfer_with_hyperbolic(sentence):
 
     
     if response.status_code == 200:
-        return response.json()["choices"][0]["text"].strip()
+       try:
+            result_text = response.json()["choices"][0]["text"].strip()
+            result_dict = json.loads(result_text)
+            return result_dict
+       except (json.JSONDecodeError, KeyError) as e:
+            return {"error": f"Failed to parse API response: {str(e)}"}
     else:
         return {"error": f"API call failed with status code {response.status_code}: {response.text}"}
 
-# exapmple testing
+#exapmple testing
 examples = [
     "alice.eth sent 10 ETH to bob.eth on Base",
-    "Please transfer 5 Bitcoin to charlie.eth on btc",
-    "Can you send 100 USDT to david.eth on Ethereum?",
-    "I want to transfer 0.5 DOGE to frank.eth on Polygon",
-    "This sentence does not contain any ENS address"
+    # "Please transfer 5 Bitcoin to charlie.eth on btc",
+    # "Can you send 100 USDT to david.eth on Ethereum?",
+    # "I want to transfer 0.5 DOGE to frank.eth on Polygon",
+    # "This sentence does not contain any ENS address"
 ]
 
 # testing

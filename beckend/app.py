@@ -45,7 +45,7 @@ def audio():
     #response = {"message": f"i will sen the request and order a mango sticky rice for you"}
     global i
     if i == 0:
-        
+        time.sleep(1)
         response = {"message": f"Sending 1 Ethereum to mangomango.eth. Confirm to proceed?"}
         i = 1
     else:

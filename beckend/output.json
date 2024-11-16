@@ -1,0 +1,7 @@
+{
+    "from": "alice.eth",
+    "to": "0x033B6C8f3c9F14bB72774c8DC952594145AA9cfA",
+    "amount": 1,
+    "unit": "ETH",
+    "chain_name": null
+}
