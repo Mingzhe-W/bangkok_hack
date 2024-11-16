@@ -1,0 +1,7 @@
+{
+    "from": "alice.eth",
+    "to": "bob.eth",
+    "amount": 0.01,
+    "unit": "ETH",
+    "chain_name": null
+}
