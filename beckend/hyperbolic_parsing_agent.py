@@ -31,7 +31,7 @@ def parse_transfer_with_hyperbolic(sentence):
     
     # if not sender and not receiver:
     #     return {"error": "No ENS address found in the sentence"}
-    # 定义 Prompt
+    # define Prompt
     prompt = f"""
     Extract transfer details from the following sentence:
     Sentence: "{sentence}"
@@ -68,17 +68,4 @@ def parse_transfer_with_hyperbolic(sentence):
     else:
         return {"error": f"API call failed with status code {response.status_code}: {response.text}"}
 
-#exapmple testing
-# examples = [
-#     "alice.eth sent 10 ETH to bob.eth on Base",
-#     # "Please transfer 5 Bitcoin to charlie.eth on btc",
-#     # "Can you send 100 USDT to david.eth on Ethereum?",
-#     # "I want to transfer 0.5 DOGE to frank.eth on Polygon",
-#     # "This sentence does not contain any ENS address"
-# ]
 
-# # testing
-# for sentence in examples:
-#     result = parse_transfer_with_hyperbolic(sentence)
-#     print(f"Input: {sentence}")
-#     print(f"Output: {result}\n")

@@ -28,36 +28,34 @@ def audio():
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], audio_file.filename)
     audio_file.save(file_path)
 
-    # 转录音频
+    # speech to text
     text = transcribe_audio(file_path)
     print(text)
 
-    # response = parse_transfer_with_hyperbolic(text)
-    # if response.get("error"):
-    #     response = {"message": f"there is something wrong with the agent API"}
-    #     return jsonify(response), 200
-    
-    # else:
-    #     if (not response.get("to")) or (not response.get("amount")) or (not response.get("unit")):
-    #         {"message": f"i hear"}
-    #         return jsonify(response), 200
-
-    #response = {"message": f"i will sen the request and order a mango sticky rice for you"}
     global i
-    if i == 0:
-        time.sleep(1)
-        response = {"message": f"Sending 1 Ethereum to mangomango.eth. Confirm to proceed?"}
-        i = 1
+    response = parse_transfer_with_hyperbolic(text)
+    if response.get("error"):
+        response = {"message": f"there is something wrong with the agent API"}
+        return jsonify(response), 200
+    
     else:
-        os.system("npx hardhat run sendTx.js --network sepolia")
-        response = {"message": f"Done! The transaction has been sent."}
-        i = 0
+        
+        if (not response.get("to")) or (not response.get("amount")) or (not response.get("unit")):
+            {"message": f"I don't understand, can you repeat?"}
+            return jsonify(response), 200
+        else:
+            if i == 0:
+                response = {"message": f"Sending {response['amount']} {response['unit']} to {response['to']}. Confirm to proceed?"}
+                i = 1
+                return jsonify(response), 200
+            else:
+                os.system("npx hardhat run sendTx.js --network sepolia")
+                response = {"message": f"Done! The transaction has been sent."}
+                i = 0
+                return jsonify(response), 200
 
-    # 模拟 AI 响应
-    #response = {"message": f"i hear you, i will sendt the request and order a mango sticky rice for you"}
-    return jsonify(response), 200
-
-
+            
+    
 
 
 
