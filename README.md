@@ -14,3 +14,50 @@ Our project leverages several key technologies to bring voice-based blockchain t
 4. Proof of Editing: We custom-designed zero-knowledge circuits using Plonky2 to validate limited edits (masking or tuning) on voice data. This ensures sensitive information remains private while proving the integrity of edits.
 5. ENS Service: ENS is integrated to resolve wallet addresses, improving user experience by avoiding cumbersome verbal address exchanges. 
 6. Onchain Data Storage: Large audio data and ZKPs are stored and accessed via decentralized storage solutions like Filecoin's Storacha, ensuring scalability and performance.
+
+
+
+You can try our project by 
+
+Frontend: at root dir
+
+```shell
+python -m http.server
+
+```
+
+Beckend: at beckend folder
+
+```shell
+python app.py
+```
+
+and open a browser to enter
+
+```shell
+http://localhost:8000
+```
+
+
+
+Main files explains:
+
+
+
+beckend/app.py: 						beckend main program
+
+beckend/voice_print.py: 				   voice print (not integrated into main program yet)
+
+beckend/hyperbolic_parsing_agent.py: 	LLM based speech analysis using hyperbolic API
+
+beckend/audio_transcriptor.py: 		    speech to text
+
+index.html: 							frontend
+
+zero_knowledge_proof/src/main.rs: 	     zk circuits for Proof of Editing 
+
+
+
+
+
+ 
