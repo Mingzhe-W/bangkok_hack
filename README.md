@@ -23,7 +23,6 @@ Frontend: at root dir
 
 ```shell
 python -m http.server
-
 ```
 
 Beckend: at beckend folder
