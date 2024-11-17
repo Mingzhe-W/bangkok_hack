@@ -30,6 +30,24 @@ async function main() {
     // 等待交易确认
     const receipt = await transaction.wait();
     console.log('Transaction successful with hash:', receipt.transactionHash);
+    
+// // kinto：
+    // // 调用 Kinto 的 API 发起交换交易
+    // const kintoApiUrl = "https://api.kinto.xyz/v1/swap";
+    // try {
+    //     const response = await axios.post(kintoApiUrl, swapData, {
+    //         headers: {
+    //             'Authorization': `Bearer ${process.env.KINTO_API_KEY}`,
+    //             'Content-Type': 'application/json',
+    //         },
+    //     });
+
+    //     // 输出 Kinto API 返回的结果
+    //     console.log('Kinto transaction response:', response.data);
+    // } catch (error) {
+    //     console.error('Error during Kinto API call:', error.response ? error.response.data : error.message);
+    // }
+
 }
 
 main()
