@@ -12,7 +12,7 @@ Our project leverages several key technologies to bring voice-based blockchain t
 2. Blockchain Integration: Transactions are executed on Ethereum and L2 chains using their SDKs and APIs, ensuring fast and reliable on-chain interactions.
 3. Voiceprint Signatures: A GMM model trains user-specific voiceprint recognition, verifying the speaker matches the wallet owner. The inference process is secured using ZKML(EZKL) to prevent inference result from being tempered.
 4. Proof of Editing: We custom-designed zero-knowledge circuits using Plonky2 to validate limited edits (masking or tuning) on voice data. This ensures sensitive information remains private while proving the integrity of edits.
-5. ENS Service: ENS is integrated to resolve wallet addresses, improving user experience by avoiding cumbersome verbal address exchanges. 
+5. ENS Service: ENS is integrated to resolve wallet addresses, improving user experience by avoiding cumbersome verbal address exchanges.  (However, because Sepolia testnet does not support ENS service, we hardcoded the destination of all transfer to a Sepolia testnet address to save money. Poor student here :( The actual intended destination ENS address can be detect by our agent. You can change one line of code to make it work on mainnet )
 6. Onchain Data Storage: Large audio data and ZKPs are stored and accessed via decentralized storage solutions like Filecoin's Storacha, ensuring scalability and performance.
 
 
